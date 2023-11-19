@@ -2,8 +2,7 @@
 import { ref, onMounted } from 'vue'
 import ButtonRight from './ButtonRight.vue';
 import ButttonLeft from './ButtonLeft.vue'
-import CardExclusive from './CardExclusive.vue';
-import { dealsExclusive } from '../js/data'
+
 import dataApi from '../api';
 
 const deals = ref([])
@@ -17,7 +16,6 @@ const changeGroup = (delta) => {
 };
 
 onMounted(async () => {
-
   const {data} = await dataApi.get('/deals')
   deals.value = data.result
 

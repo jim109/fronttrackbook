@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+
 import dataApi from '../api';
 import ButtonRight from './ButtonRight.vue';
 import ButtonLeft from './ButtonLeft.vue';
