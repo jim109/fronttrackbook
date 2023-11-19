@@ -12,7 +12,7 @@ import FooterMain from './components/FooterMain.vue'
 </script>
 
 <template>
-  <div id="app">
+  <div>
     <HeaderMain />
     <HeroMain />
     <SectionSecundary />
