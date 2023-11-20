@@ -1,12 +1,12 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import ButtonRight from './ButtonRight.vue';
 import ButttonLeft from './ButtonLeft.vue'
 
 import dataApi from '../api';
 
 const deals = ref([])
-const itemsPerGroup = 4;
+const itemsPerGroup = ref(3);
 const groups = ref([]);
 const currentGroup = ref(0);
 
@@ -15,12 +15,22 @@ const changeGroup = (delta) => {
   currentGroup.value = newIndex;
 };
 
+watch(() => {
+  if (window.innerWidth >= 320 && window.innerWidth <= 767) {
+    itemsPerGroup.value = 1;
+  } else if (window.innerWidth >= 768 && window.innerWidth <= 1023) {
+    itemsPerGroup.value = 3;
+  } else {
+    itemsPerGroup.value = 4;
+  }
+});
+
 onMounted(async () => {
-  const {data} = await dataApi.get('/deals')
+  const { data } = await dataApi.get('/deals')
   deals.value = data.result
 
-  for (let i = 0; i < deals.value.length; i += itemsPerGroup) {
-    groups.value.push(deals.value.slice(i, i + itemsPerGroup));
+  for (let i = 0; i < deals.value.length; i += itemsPerGroup.value) {
+    groups.value.push(deals.value.slice(i, i + itemsPerGroup.value));
   }
 })
 
@@ -39,14 +49,14 @@ onMounted(async () => {
       <div class="carousel-inner">
         <div v-for="(group, index) in groups" :key="index" class="carousel-item" :class="{ 'active': index === currentGroup }">
 
-          <article class="container d-flex justify-content-between flex-row">
+          <article class="container d-flex justify-content-between justify-content-sm-center flex-row">
                       <div class="card card-default" v-for="(deal, subIndex) in group" :key="subIndex">
-                          <div style="width: 270px; height: 290px;">
-                            <img :src="deal.img_tour" class="card-img-top" alt="imagen madrid" >
+                          <div class="contenedor-imagen" >
+                            <img :src="deal.img_tour" class="card-img-top" :alt="`imagen de ` + deal.nombre_ciudad " >
                           </div>
                           <div class="card-body">
                           <div class="d-flex flex-row justify-content-between align-items-center">
-                              <h5 class="card-title">{{ deal.nombre_ciudad}}</h5>
+                              <h5 class="card-title text-capitalize">{{ deal.nombre_ciudad }}</h5>
                               <div class="d-flex flex-row">
                               <span class="rating px-2">★</span>
                               <p>{{ deal.calificacion }}</p>
@@ -59,7 +69,7 @@ onMounted(async () => {
                                   <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"></path>
                                   <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z"></path>
                               </svg>
-                              <p class="px-2">{{ deal.nombre_pais }}</p>
+                              <p class="px-2 text-capitalize">{{ deal.nombre_pais }}</p>
                               </div>
                               <div class="d-flex flex-row">
                               <p class="card-text"><del>${{ deal.precio }}</del></p>
@@ -120,6 +130,60 @@ onMounted(async () => {
   object-fit: cover;
   width: 100%;
   height: 100%;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.contenedor-imagen {
+  width: 270px; 
+  height: 290px;
+  overflow: hidden;
+}
+@media screen and (min-width: 1024px) and (max-width: 1439px) {
+  .contenedor-imagen {
+  width: 225px; 
+  height: 200px;
+  overflow: hidden;
+  background-color: aqua;
+}
+.container .card-default {
+  margin: 0;
+}
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .contenedor-imagen {
+  width: 226px; 
+  height: 265px;
+  overflow: hidden;
+}
+.container .card-default {
+  margin: 0px;
+}
+.carousel-control-prev {
+  left: 40%; /* Ajusta la posición horizontal del botón izquierdo */
+
+}
+
+.carousel-control-next {
+  right: 40%; /* Ajusta la posición horizontal del botón derecho */
+}
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  #section-exclusive .title-secundary p {
+    width: auto;
+  }
+  #section-exclusive .title-secundary h2 {
+    font-size: 30px;
+  }
+  .carousel-control-prev {
+  left: 35%; /* Ajusta la posición horizontal del botón izquierdo */
+
+}
+
+.carousel-control-next {
+  right: 35%; /* Ajusta la posición horizontal del botón derecho */
+}
 }
 </style>
 

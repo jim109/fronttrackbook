@@ -20,3 +20,19 @@
     </div>
     </section>
 </template>
+<style scoped>
+@media screen and (min-width: 768px) and (max-width: 1439px) {
+  .img-arboles img {
+    display: none;
+  }
+}
+@media screen and (min-width: 320px) and (max-width: 767px) {
+#suscribe h2 {
+    font-size: 28px;
+    width: 320px;
+  }
+  #suscribe .input-group {
+    width: 320px;
+  }
+}
+</style>

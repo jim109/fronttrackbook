@@ -1,12 +1,12 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 
 import dataApi from '../api';
 import ButtonRight from './ButtonRight.vue';
 import ButtonLeft from './ButtonLeft.vue';
 
 const vacations = ref([]);
-const itemsPerGroup = 3;
+const itemsPerGroup = ref(3);
 const groups = ref([]);
 const currentGroup = ref(0);
 
@@ -15,12 +15,20 @@ const changeGroup = (delta) => {
   currentGroup.value = newIndex;
 };
 
+watch(() => {
+  if (window.innerWidth >= 320 && window.innerWidth <= 767) {
+    itemsPerGroup.value = 1;
+  } else {
+    itemsPerGroup.value = 3;
+  }
+});
+
 onMounted(async () => {
   const { data } = await dataApi.get('/tours');
   vacations.value = data.result;
 
-  for (let i = 0; i < vacations.value.length; i += itemsPerGroup) {
-    groups.value.push(vacations.value.slice(i, i + itemsPerGroup));
+  for (let i = 0; i < vacations.value.length; i += itemsPerGroup.value) {
+    groups.value.push(vacations.value.slice(i, i + itemsPerGroup.value));
   }
 });
 </script>
@@ -31,8 +39,8 @@ onMounted(async () => {
     <article class="container d-flex flex-row align-items-center justify-content-center pb-5">
       <div class="container d-flex flex-column align-items-start title-secundary">
         <div class="row row-cols-3 w-100 align-items-center">
-          <div class="col-3"></div>
-          <div class="col-6 d-flex flex-column align-items-center">
+          <div class="col-3 col-sm-0"></div>
+          <div class="col-6 col-sm-12 d-flex flex-column align-items-center">
             <h2>Best <span>vacation plan</span></h2>
             <p>Plan your perfect vacation with our travel agency. Choose among hundreds of all-inclusive offers!  </p>
           </div>
@@ -60,12 +68,12 @@ onMounted(async () => {
            
           <article class="container d-flex justify-content-between">
               <div class="card card-default" v-for="(vacation, subIndex) in group" :key="subIndex">
-                <div style="width: 369px; height: 327px;">
-                  <img :src="vacation.img_tour" class="card-img-top" alt="imagen madrid" >
+                <div class="contenedor-imagen" style="">
+                  <img :src="vacation.img_tour" class="card-img-top" :alt="`imagen de ` + vacation.nombre_ciudad " >
                 </div>
                 <div class="card-body">
                   <div class="d-flex flex-row justify-content-between align-items-center">
-                    <h5 class="card-title py-3">{{ vacation.nombre_ciudad}},{{ vacation.nombre_pais }}</h5>
+                    <h5 class="card-title py-3 text-capitalize">{{ vacation.nombre_ciudad.trim()}}, {{ vacation.nombre_pais }}</h5>
                     <div class="d-flex flex-row">
                       <span class="card-text ">${{ vacation.precio }}K</span>  
                     </div>
@@ -119,5 +127,58 @@ onMounted(async () => {
   object-fit: cover;
   width: 100%;
   height: 100%;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.contenedor-imagen {
+  width: 369px; 
+  height: 327px;
+  overflow: hidden;
+}
+@media screen and (min-width: 1024px) and (max-width: 1439px) {
+  .contenedor-imagen {
+  width: 270px; 
+  height: 250px;
+  overflow: hidden;
+}
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .contenedor-imagen {
+  width: 220px; 
+  height: 220px;
+  overflow: hidden;
+}
+.card-default {
+  margin: 0px 0px 50px 0px;
+}
+#section-exclusive .container {
+  padding: 0px;
+}
+#section-exclusive .title-secundary h2 {
+  font-size: 37px;
+}
+.carousel-control-prev {
+  left: 78%; /* Ajusta la posición horizontal del botón izquierdo */
+
+}
+}
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .img-secundary {
+    display: none;
+  }
+
+#section-exclusive .title-secundary p { 
+  width: 320px;
+}
+.carousel-control-prev {
+  left: 68%; /* Ajusta la posición horizontal del botón izquierdo */
+
+}
+.contenedor-imagen {
+  width: 345px; 
+  height: 327px;
+}
+
 }
 </style>

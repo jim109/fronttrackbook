@@ -5,7 +5,7 @@
           <h2 style="font-family: 'Volkhov'; font-size: 48px;">Get update with <span style="color: #FA7436; ">latest blog</span></h2>
         </div>
       </article>
-      <article class="container d-flex justify-content-between">
+      <article class="blog container d-flex justify-content-between flex-row">
         <div class="container card-blog ">
           <img src="/src/assets/amazing.png" class="card-img-top img-blog" alt="imagen madrid">
           <div class="card-body blog">
@@ -50,3 +50,15 @@
       </article>
     </section>
 </template>
+<style scoped>
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .blog  {
+    flex-direction: column;
+  }
+  .blog .card-blog {
+    margin-bottom: 40px;
+  }
+
+}
+</style>

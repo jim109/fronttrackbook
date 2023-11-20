@@ -12,7 +12,7 @@ import CardExploreNow from './CardExploreNow.vue';
                     <h1>Get started your exciting <span>journey</span>
                       with us.
                       </h1>
-                  <p>A Team of experienced tourism professionals will provide you with the best advice and tips for your desire place. </p>
+                  <p class="hero-text">A Team of experienced tourism professionals will provide you with the best advice and tips for your desire place. </p>
                   </div>
                   <button type="button" class="btn btn-lg">Discover Now</button>
               </article>
@@ -49,3 +49,53 @@ import CardExploreNow from './CardExploreNow.vue';
       <CardExploreNow />
     </section>
 </template>
+
+<style scoped>
+@media screen and (min-width: 1024px) and (max-width: 1439px) {
+  #hero h1 {
+    font-size: 47px;
+  }
+  #hero .hero-text {
+    font-size: 14px;
+  }
+  #hero article img {
+    width: 350px;
+    height: auto;
+  }
+  #container-float {
+    display: none;
+  }
+  
+}
+
+@media screen and (min-width: 320px) and (max-width: 1023px) {
+
+  #hero h1 {
+    font-size: 42px;
+  }
+  #container-float {
+    display: none;
+  }
+  #hero .hero-text {
+    font-size: 16px;
+  }
+  #hero article img {
+    width: 250px;
+    height: auto;
+  }
+  #hero .cont-foto {
+    display: none;
+  }
+  
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  #hero .cont-info{
+    padding: 0px;
+  }
+  #hero button {
+    width: inherit;
+  }
+}
+
+</style>

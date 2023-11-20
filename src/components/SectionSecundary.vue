@@ -40,3 +40,33 @@
         </article>
     </section>
 </template>
+<style scoped>
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  #section-secundary .card-section h5 {
+
+    padding-top: 16px;
+    font-size: 18px;
+  }
+  #section-secundary .card-section p {
+    font-size: 14px;
+  }
+  #section-secundary .card {
+    padding: 32px;
+  }
+}
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .img-secundary {
+    display: none;
+  }
+  #section-secundary .card-section h5 {
+  padding-top: 16px;
+  font-size: 24px;
+}
+#section-secundary .d-flex {
+    flex-direction: column;
+  }
+  #section-secundary .d-flex .card {
+    margin-bottom: 10px;
+  }
+}
+</style>
