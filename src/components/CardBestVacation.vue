@@ -39,12 +39,12 @@
       <div>    
         <button @click="changeGroup(-1)" class="carousel-control-prev" type="button" data-bs-target="#carouselBestVacation" data-bs-slide="prev">
           <ButtonLeft />
-      </button>
+        </button>
 
-      <button @click="changeGroup(1)" class="carousel-control-next" type="button" data-bs-target="#carouselBestVacation" data-bs-slide="next">
-        <ButtonRight />
-      </button>       
-</div>
+        <button @click="changeGroup(1)" class="carousel-control-next" type="button" data-bs-target="#carouselBestVacation" data-bs-slide="next">
+          <ButtonRight />
+        </button>       
+      </div>
 
 <div class="carousel-inner">
   <div v-for="(group, index) in groups" :key="index" class="carousel-item" :class="{ 'active': index === currentGroup }">
